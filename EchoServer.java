@@ -8,7 +8,7 @@ public class EchoServer {
         DatagramSocket aSocket = null;
         Scanner keyboard = new Scanner(System.in);
         try {
-
+        
             // Gets serverPort from cmdline
             //Debug: String serverInput = "6789";
             System.out.println("\nPlease enter a Server Port");
@@ -28,13 +28,14 @@ public class EchoServer {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 aSocket.receive(request);
                 System.out.println("\nRequest received.");
+                
+            	String temp = new String(request.getData());
+            System.out.println("\nOriginal Message:  " + temp);
+            	temp = temp.toUpperCase();
 
-                String temp = new String(request.getData());
-                temp = temp.toUpperCase();
-
-                byte[] capString = new byte[1024];
-                capString = temp.getBytes();
-
+            	byte[] capString = new byte[1024];
+            	capString = temp.getBytes();
+            
                 DatagramPacket reply = new DatagramPacket(capString, request.getLength(), request.getAddress(),
                         request.getPort());
                 aSocket.send(reply);
